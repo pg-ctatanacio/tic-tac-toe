@@ -12,3 +12,11 @@
 	text-align: center;
 	width: 34px;
 }
+
+.square-solid-x {
+    background-color: rgb(128, 0, 90);
+}
+
+.square-solid-o {
+    background-color: rgb(0, 26, 128);
+}

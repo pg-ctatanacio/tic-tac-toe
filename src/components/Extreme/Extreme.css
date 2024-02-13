@@ -1,0 +1,11 @@
+.extreme-board {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.extreme-board-col {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}

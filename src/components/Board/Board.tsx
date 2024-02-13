@@ -1,27 +1,53 @@
 import Square from "../Square/Square";
+import SquareSolid from "../Square/SquareSolid";
 import "./Board.css";
 
 type BoardType = {
+    isFirstMove: boolean;
+    boardWinner?: string|null;
+    lastMoveIndex?: number;
 	xIsNext: boolean;
+    boardNo: number;
 	squares: (string | null)[];
-	onPlay: (nextSquares: (string | null)[]) => void;
+	onPlay: (boardNo: number, nextSquares: (string | null)[], moveIndex: number, winner: string|null) => void;
+    onHandlePlay?: (boardNo: number, cellIndex: number) => void;
 };
 
-const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
+const Board = ({ isFirstMove, boardWinner, lastMoveIndex, xIsNext, boardNo, squares, onPlay, onHandlePlay }: BoardType) => {
+    // console.log('board winner: ' + boardWinner);
+
+    // board should not handle the ways on how to win
+    // it should be inside game component.
 	const handleClick = (i: number) => {
-		if (squares[i] || calculateWinner(squares)) {
+        // console.log('calculate winner onclick: ', calculateWinner(squares));
+
+        // extreme mode restriction
+        let hasWinner = calculateWinner(squares);
+        if ((boardNo !== lastMoveIndex)) {
+            console.log('Move should be only done in board # ' + lastMoveIndex);
+            return;
+        }
+
+        // -- end extreme mode restriction
+
+        if (squares[i] || calculateWinner(squares)) {
 			return;
 		}
 
 		const nextSquares = squares.slice();
-
 		if (xIsNext) {
 			nextSquares[i] = "X";
 		} else {
 			nextSquares[i] = "O";
 		}
 
-		onPlay(nextSquares);
+        let winner = null;
+        console.log('calculate winner onclick: ', calculateWinner(squares));
+        if (calculateWinner(nextSquares)) {
+            winner = nextSquares[i];
+        }
+
+		onPlay(boardNo, nextSquares, i, winner);
 	};
 
 	const calculateWinner = (squares: (string | null)[]) => {
@@ -46,13 +72,13 @@ const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
 		return null;
 	};
 
-	const winner = calculateWinner(squares);
-	let status;
-	if (winner) {
-		status = "Winner: " + winner;
-	} else {
-		status = "Next player: " + (xIsNext ? "X" : "O");
-	}
+	// const winner = calculateWinner(squares);
+	// let status;
+	// if (winner) {
+	// 	status = "Winner: " + winner;
+	// } else {
+	// 	status = "Next player: " + (xIsNext ? "X" : "O");
+	// }
 
     const renderBoard = () => {
         let rows = [];
@@ -61,7 +87,29 @@ const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
             for (let j = 0; j < 3; j++) {
                 // (row * 3) + col
                 let index = (i * 3) + j;
-                columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />);
+
+                // columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />);
+
+                if (calculateWinner(squares)) {
+                    if (boardWinner === 'X') {
+                        if ([0,2,4,6,8].includes(index)) {
+                            columns.push(<SquareSolid styles="square-solid-x" key={index} value={null} />);
+                        } else {
+                            columns.push(<SquareSolid key={index} value={null} />);
+                        }
+                    } else if (boardWinner === 'O') {
+                        if ([0,1,2,3,5,6,7,8].includes(index)) {
+                            columns.push(<SquareSolid key={index} styles="square-solid-o" value={null} />);
+                        } else {
+                            columns.push(<SquareSolid key={index} value={null} />);
+                        }
+                    } else {
+                        columns.push(<Square key={index} value={squares[index]} onSquareClick={() => (onHandlePlay) && onHandlePlay(boardNo, index)} />);
+                    }
+                } else {
+                    columns.push(<Square key={index} value={squares[index]} onSquareClick={() => (onHandlePlay) && onHandlePlay(boardNo, index)} />);
+                }
+                
             }
 
             rows.push(<div key={i} className="board-row">{columns}</div>);
@@ -70,11 +118,23 @@ const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
         return rows;
     }
 
+    const getBoardHighlight = () => {
+        let highlight = '';
+        if (boardNo === lastMoveIndex && !isFirstMove) {
+            highlight = 'board-highlight-focus';
+        } 
+        // else if (calculateWinner(squares)) {
+        //     highlight = 'board-highlight-win';
+        // }
+
+        return highlight
+    }
+
 	return (
-		<>
-			<div className="status">{status}</div>
+		<div className={`board-container ${getBoardHighlight()}`}>
+			{/* <div className="status">{status}</div> */}
             {renderBoard()}
-		</>
+		</div>
 	);
 };
 

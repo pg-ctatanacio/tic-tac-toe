@@ -7,3 +7,20 @@
 .status {
 	margin-bottom: 10px;
 }
+
+.board-container {
+    border-width: 3px;
+    border-style: solid;
+
+    /* border-style: hidden; */
+
+    border-color: transparent;
+}
+
+.board-highlight-focus {
+    border-color: red;
+}
+
+.board-highlight-win {
+    border-color: green;
+}
