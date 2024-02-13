@@ -1,4 +1,5 @@
 import Game from "./components/Game/Game";
+import './App.css';
 
 const App = () => {
 	return <Game />;
