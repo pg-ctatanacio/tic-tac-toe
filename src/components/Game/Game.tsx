@@ -20,9 +20,9 @@ const Game = () => {
 
 	const moves = history.map((squares, move) => {
 		let description;
-		if (move == 0 && move != currentMove) {
+		if (move === 0 && move !== currentMove) {
 			description = "Go to game start";
-		} else if (move > 0 && move != currentMove) {
+		} else if (move > 0 && move !== currentMove) {
 			description = "Go to move #" + move;
 		} else {
 			description = "You are at move #" + move;
