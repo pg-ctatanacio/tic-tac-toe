@@ -1,84 +1,30 @@
 import Square from "../Square/Square";
 import SquareSolid from "../Square/SquareSolid";
 import "./Board.css";
+import { calculateWinner } from "../../utils";
 
 type BoardType = {
     isFirstMove: boolean;
     boardWinner?: string|null;
     lastMoveIndex?: number;
-	xIsNext: boolean;
-    boardNo: number;
+    boardNo?: number;
 	squares: (string | null)[];
-	onPlay: (boardNo: number, nextSquares: (string | null)[], moveIndex: number, winner: string|null) => void;
-    onHandlePlay?: (boardNo: number, cellIndex: number) => void;
+    boardStyles?: string; 
+    onHandlePlay?: (cellIndex: number) => void;
+    isExtreme?: boolean;
+    onHandleExtremePlay?: (cellIndex: number, boardNo: number|undefined) => void;
 };
 
-const Board = ({ isFirstMove, boardWinner, lastMoveIndex, xIsNext, boardNo, squares, onPlay, onHandlePlay }: BoardType) => {
-    // console.log('board winner: ' + boardWinner);
-
-    // board should not handle the ways on how to win
-    // it should be inside game component.
-	const handleClick = (i: number) => {
-        // console.log('calculate winner onclick: ', calculateWinner(squares));
-
-        // extreme mode restriction
-        let hasWinner = calculateWinner(squares);
-        if ((boardNo !== lastMoveIndex)) {
-            console.log('Move should be only done in board # ' + lastMoveIndex);
-            return;
+const Board = ({ isFirstMove, boardWinner, lastMoveIndex, boardNo, squares, onHandlePlay, isExtreme = false, onHandleExtremePlay }: BoardType) => {
+    const handleSquareClick = (cellIndex: number, boardNo: number|undefined) => {
+        if (isExtreme && onHandleExtremePlay) {
+            onHandleExtremePlay(cellIndex, boardNo);
         }
 
-        // -- end extreme mode restriction
-
-        if (squares[i] || calculateWinner(squares)) {
-			return;
-		}
-
-		const nextSquares = squares.slice();
-		if (xIsNext) {
-			nextSquares[i] = "X";
-		} else {
-			nextSquares[i] = "O";
-		}
-
-        let winner = null;
-        console.log('calculate winner onclick: ', calculateWinner(squares));
-        if (calculateWinner(nextSquares)) {
-            winner = nextSquares[i];
+        if (onHandlePlay && !onHandleExtremePlay) {
+            onHandlePlay(cellIndex)
         }
-
-		onPlay(boardNo, nextSquares, i, winner);
-	};
-
-	const calculateWinner = (squares: (string | null)[]) => {
-		const lines = [
-			[0, 1, 2],
-			[3, 4, 5],
-			[6, 7, 8],
-			[0, 3, 6],
-			[1, 4, 7],
-			[2, 5, 8],
-			[0, 4, 8],
-			[2, 4, 6],
-		];
-
-		for (let i = 0; i < lines.length; i++) {
-			const [a, b, c] = lines[i];
-			if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-				return squares[a];
-			}
-		}
-
-		return null;
-	};
-
-	// const winner = calculateWinner(squares);
-	// let status;
-	// if (winner) {
-	// 	status = "Winner: " + winner;
-	// } else {
-	// 	status = "Next player: " + (xIsNext ? "X" : "O");
-	// }
+    }
 
     const renderBoard = () => {
         let rows = [];
@@ -104,10 +50,10 @@ const Board = ({ isFirstMove, boardWinner, lastMoveIndex, xIsNext, boardNo, squa
                             columns.push(<SquareSolid key={index} value={null} />);
                         }
                     } else {
-                        columns.push(<Square key={index} value={squares[index]} onSquareClick={() => (onHandlePlay) && onHandlePlay(boardNo, index)} />);
+                        columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleSquareClick(index, boardNo)} />);
                     }
                 } else {
-                    columns.push(<Square key={index} value={squares[index]} onSquareClick={() => (onHandlePlay) && onHandlePlay(boardNo, index)} />);
+                    columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleSquareClick(index, boardNo)} />);
                 }
                 
             }

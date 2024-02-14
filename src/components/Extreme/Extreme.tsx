@@ -9,21 +9,12 @@ const Extreme = () => {
     const [boardWinner, setBoardWinner] = useState<(string | null)[]>(Array(9).fill(null));
     const [isFirstMove, setIsFirstMove] = useState<boolean>(true);
 
-    const handlePlay = (boardNo: number, nextSquares: (string | null)[], index: number, winner: string | null) => {
-        const nextBoard = squares.slice();
-        nextBoard[boardNo] = nextSquares;
+    const handlePlay2 = (cellIndex: number, boardNo: number|undefined) => {
+        if (boardNo === undefined) {
+            console.log('Error board no. not found.');
+            return;
+        }
 
-        setSquares(nextBoard);
-        setXIsNext(!xIsNext);
-
-        setLastMoveIndex(index);
-
-        const nextBoardWinner = boardWinner.slice();
-        nextBoardWinner[boardNo] = winner;
-        setBoardWinner(nextBoardWinner);
-    }
-
-    const handlePlay2 = (boardNo: number, cellIndex: number) => {
         let hasWinner = calculateWinner(squares[boardNo]);
 
         // Check if board required has winner.
@@ -104,21 +95,22 @@ const Extreme = () => {
     return (
         <>
             <div className="extreme-board">
+                <div>Extreme TicTac</div>
                 {renderMoveLabel()}
                 <div className="extreme-board-col">
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[0]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={0} squares={squares[0]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[1]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={1} squares={squares[1]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[2]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={2} squares={squares[2]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[0]} lastMoveIndex={lastMoveIndex} boardNo={0} squares={squares[0]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[1]} lastMoveIndex={lastMoveIndex} boardNo={1} squares={squares[1]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[2]} lastMoveIndex={lastMoveIndex} boardNo={2} squares={squares[2]} onHandleExtremePlay={handlePlay2} isExtreme />
                 </div>
                 <div className="extreme-board-col">
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[3]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={3} squares={squares[3]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[4]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={4} squares={squares[4]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[5]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={5} squares={squares[5]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[3]} lastMoveIndex={lastMoveIndex} boardNo={3} squares={squares[3]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[4]} lastMoveIndex={lastMoveIndex} boardNo={4} squares={squares[4]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[5]} lastMoveIndex={lastMoveIndex} boardNo={5} squares={squares[5]} onHandleExtremePlay={handlePlay2} isExtreme />
                 </div>
                 <div className="extreme-board-col">
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[6]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={6} squares={squares[6]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[7]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={7} squares={squares[7]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
-                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[8]} lastMoveIndex={lastMoveIndex} xIsNext={xIsNext} boardNo={8} squares={squares[8]} onPlay={handlePlay} onHandlePlay={handlePlay2} />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[6]} lastMoveIndex={lastMoveIndex} boardNo={6} squares={squares[6]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[7]} lastMoveIndex={lastMoveIndex} boardNo={7} squares={squares[7]} onHandleExtremePlay={handlePlay2} isExtreme />
+                    <Board isFirstMove={isFirstMove} boardWinner={boardWinner[8]} lastMoveIndex={lastMoveIndex} boardNo={8} squares={squares[8]} onHandleExtremePlay={handlePlay2} isExtreme />
                 </div>
             </div>
         </>
