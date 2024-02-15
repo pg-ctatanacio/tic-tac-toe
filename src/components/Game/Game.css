@@ -1,8 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+
+body {
+  font-family: 'Short Stack', cursive;
+}
+
 .game {
-	display: flex;
-	flex-direction: row;
+    position: absolute;
+    top: 50%;
+    height: 10em;
+    margin-top: -5em;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+
+.game__title {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 10px;
+}
+
+.game__status {
+    margin: 10px 0;
+    text-align: center;
 }
 
 .game-info {
 	margin-left: 20px;
+}
+
+.game__controls {
+    margin-left: -1px;
+}
+
+.controls__button {
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.controls__button:hover {
+    background-color: #c1c1c1;
+}
+
+.controls__button_disabled {
+    cursor: not-allowed;
 }

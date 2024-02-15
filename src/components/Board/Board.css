@@ -11,9 +11,6 @@
 .board-container {
     border-width: 3px;
     border-style: solid;
-
-    /* border-style: hidden; */
-
     border-color: transparent;
 }
 
@@ -24,3 +21,4 @@
 .board-highlight-win {
     border-color: green;
 }
+

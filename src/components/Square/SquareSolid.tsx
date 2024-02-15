@@ -1,15 +1,13 @@
 import "./Square.css";
 
 type SquareProps = {
-	value: string | null;
-    styles?: string
+    styles?: string;
+    size?: number;
 };
 
-const SquareSolid = ({ value, styles }: SquareProps) => {
+const SquareSolid = ({ styles, size = 48 }: SquareProps) => {
     return (
-		<button className={`square ${styles}`} disabled>
-			{value}
-		</button>
+		<button style={{height: size, width: size}} className={`square ${styles}`} disabled></button>
 	);
 }
 

@@ -5,7 +5,7 @@ describe('Test Regular Game', () => {
 
     it('should render Game component', () => {
         const view = render(<Game />);
-        const elem = screen.getByText('TicTac');
+        const elem = screen.getByText('TicTacToe');
         expect(elem).toBeInTheDocument();
     })
 
@@ -25,7 +25,7 @@ describe('Test Regular Game', () => {
         
         fireEvent.click(squares[0]);
 
-        expect(squares[0].innerHTML).toBe('X');
+        expect(squares[0]).toHaveTextContent('X');
     })
 
     it ('should set the value to O if next player clicks the button', () => {
@@ -37,7 +37,7 @@ describe('Test Regular Game', () => {
         fireEvent.click(squares[0]);
         fireEvent.click(squares[1]);
 
-        expect(squares[1].innerHTML).toBe('O');
+        expect(squares[1]).toHaveTextContent('O');
     });
 
     it ('should X win', () => {

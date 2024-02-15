@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Board from "../Board/Board";
+import { calculateWinner } from "../../utils";
 import "./Game.css";
 
 const Game = () => {
 	const [history, setHistory] = useState<(string | null)[][]>([Array(9).fill(null)]);
 	const [currentMove, setCurrentMove] = useState<number>(0);
+    const [winner, setWinner] = useState<string|null>(null);
 	const currentSquares = history[currentMove];
 	const xIsNext = currentMove % 2 === 0;
 
@@ -23,71 +25,89 @@ const Game = () => {
 		const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
 		setHistory(nextHistory);
 		setCurrentMove(nextHistory.length - 1);
+
+        if (calculateWinner(nextSquares)) {
+            setWinner(nextSquares[cellIndex]);
+        }
 	};
 
-    const calculateWinner = (squares: (string | null)[]) => {
-		const lines = [
-			[0, 1, 2],
-			[3, 4, 5],
-			[6, 7, 8],
-			[0, 3, 6],
-			[1, 4, 7],
-			[2, 5, 8],
-			[0, 4, 8],
-			[2, 4, 6],
-		];
+    const handleUndo = () => {
+        if (currentMove > 0) {
+            setCurrentMove(currentMove - 1);
+        }
+    }
 
-		for (let i = 0; i < lines.length; i++) {
-			const [a, b, c] = lines[i];
-			if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-				return squares[a];
-			}
-		}
+    const handleRedo = () => {
+        if (currentMove < history.length - 1) {
+            setCurrentMove(currentMove + 1);
+        }
+    }
 
-		return null;
-	};
+    const handleRestart = () => {
+        setHistory([Array(9).fill(null)]);
+        setCurrentMove(0);
+        setWinner(null);
+    }
 
-	const jumpTo = (nextMove: number) => {
-		setCurrentMove(nextMove);
-	};
+    const renderControls = () => {
+        if (winner || !checkGameStillRunning()) {
+            return <Button text='Restart' style={{width: '100%'}} onClick={handleRestart} />
+        } else {
+            return (
+                <>
+                    <Button text='Undo' onClick={handleUndo} disabled={currentMove === 0} />
+                    <Button text='Redo' onClick={handleRedo} disabled={currentMove >= history.length - 1} />
+                </>
+            )
+        }
+    }
 
-	const moves = history.map((squares, move) => {
-		let description;
-		if (move === 0 && move !== currentMove) {
-			description = "Go to game start";
-		} else if (move > 0 && move !== currentMove) {
-			description = "Go to move #" + move;
-		} else {
-			description = "You are at move #" + move;
-		}
+    const checkGameStillRunning = () => {
+        return !calculateWinner(currentSquares) && currentSquares.some(e => e === null);
+    }
 
-		return (
-			<li key={move}>
-				<button onClick={() => jumpTo(move)}>{description}</button>
-			</li>
-		);
-	});
-
-    const winner = calculateWinner(currentSquares);
 	let status;
 	if (winner) {
 		status = "Winner: " + winner;
+    } else if (!checkGameStillRunning()) {
+        status = "Too bad we don't have a winner...";
 	} else {
 		status = "Next player: " + (xIsNext ? "X" : "O");
 	}
 
 	return (
 		<div className="game">
-			<div className="game-board">
-                <div>TicTac</div>
-                <div>{status}</div>
-				<Board isFirstMove={false} boardNo={0} squares={currentSquares} onHandlePlay={handlePlay} />
-			</div>
-			<div className="game-info">
-				<ol>{moves}</ol>
-			</div>
+            <div className="game__title">TicTacToe</div>
+            <div className="game__status">{status}</div>
+            <div className="game__board">
+                <Board boardWinner={winner} squares={currentSquares} onHandlePlay={handlePlay} />
+            </div>
+             <div className="game__controls">
+                {renderControls()}
+            </div>
 		</div>
 	);
 };
+
+type ButtonType = {
+    text: string;
+    style?: React.CSSProperties;
+    onClick?: () => void;
+    disabled?: boolean;
+}
+
+const Button = ({ text, style, disabled = false, onClick }:  ButtonType) => {
+    let cursorType = 'pointer';
+    if (disabled) {
+        cursorType = 'not-allowed';
+    }
+
+    return <button style={{...style, ...{cursor: cursorType}}} 
+        className="controls__button" 
+        onClick={onClick} 
+        disabled={disabled}>
+            {text}
+    </button>
+}
 
 export default Game;

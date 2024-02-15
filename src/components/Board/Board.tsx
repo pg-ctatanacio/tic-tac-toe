@@ -2,9 +2,11 @@ import Square from "../Square/Square";
 import SquareSolid from "../Square/SquareSolid";
 import "./Board.css";
 import { calculateWinner } from "../../utils";
+import SquareShake from "../Square/SquareShake";
+import SquareShakeSolid from "../Square/SquareShakeSolid";
 
 type BoardType = {
-    isFirstMove: boolean;
+    isFirstMove?: boolean;
     boardWinner?: string|null;
     lastMoveIndex?: number;
     boardNo?: number;
@@ -39,21 +41,22 @@ const Board = ({ isFirstMove, boardWinner, lastMoveIndex, boardNo, squares, onHa
                 if (calculateWinner(squares)) {
                     if (boardWinner === 'X') {
                         if ([0,2,4,6,8].includes(index)) {
-                            columns.push(<SquareSolid styles="square-solid-x" key={index} value={null} />);
+                            columns.push(<SquareShakeSolid styles="square-solid-x" key={index} shakeOnRender />);
                         } else {
-                            columns.push(<SquareSolid key={index} value={null} />);
+                            columns.push(<SquareSolid key={index} />);
                         }
                     } else if (boardWinner === 'O') {
                         if ([0,1,2,3,5,6,7,8].includes(index)) {
-                            columns.push(<SquareSolid key={index} styles="square-solid-o" value={null} />);
+                            columns.push(<SquareShakeSolid key={index} styles="square-solid-o" shakeOnRender />);
                         } else {
-                            columns.push(<SquareSolid key={index} value={null} />);
+                            columns.push(<SquareSolid key={index} />);
                         }
                     } else {
                         columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleSquareClick(index, boardNo)} />);
                     }
                 } else {
-                    columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleSquareClick(index, boardNo)} />);
+                    let textColor = squares[index] === 'X' ? '#d529a2' : '#385ff7';
+                    columns.push(<SquareShake key={index} value={squares[index]} color={textColor} onSquareClick={() => handleSquareClick(index, boardNo)} />);
                 }
                 
             }
@@ -73,13 +76,15 @@ const Board = ({ isFirstMove, boardWinner, lastMoveIndex, boardNo, squares, onHa
         //     highlight = 'board-highlight-win';
         // }
 
-        return highlight
+        // return highlight
     }
 
 	return (
 		<div className={`board-container ${getBoardHighlight()}`}>
 			{/* <div className="status">{status}</div> */}
             {renderBoard()}
+
+           
 		</div>
 	);
 };
