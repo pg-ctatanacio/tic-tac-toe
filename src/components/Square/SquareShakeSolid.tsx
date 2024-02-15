@@ -15,7 +15,7 @@ const SquareShakeSolid = ({ styles, size = 48, shakeOnRender = false }: SquareSh
             setShake(true);
             setTimeout(() => setShake(false), 500);
         }
-    }, []);
+    }, [shakeOnRender]);
 
 	return (
 		<button style={{height: size, width: size}} className={`square ${styles} ` +  (shake ? `shake` : null)} disabled></button>
