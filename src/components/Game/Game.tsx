@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Board from "../Board/Board";
-import { calculateWinner } from "../../utils";
+import Button from "../Button";
+import winningSound from '../../assets/sounds/mixkit-achievement-bell-600.wav';
+import noWinnerSound from '../../assets/sounds/mixkit-short-electric-fence-buzz-2966.wav';
+import clickSound from '../../assets/sounds/mixkit-classic-click-1117.wav';
+import boardClickSound from '../../assets/sounds/mixkit-arcade-game-jump-coin-216.wav';
+import { calculateWinner, playSound } from "../../utils";
+
 import "./Game.css";
 
 const Game = () => {
@@ -29,24 +35,32 @@ const Game = () => {
         if (calculateWinner(nextSquares)) {
             setWinner(nextSquares[cellIndex]);
         }
+
+        playSound(boardClickSound);
 	};
 
     const handleUndo = () => {
         if (currentMove > 0) {
             setCurrentMove(currentMove - 1);
         }
+
+        playSound(clickSound);
     }
 
     const handleRedo = () => {
         if (currentMove < history.length - 1) {
             setCurrentMove(currentMove + 1);
         }
+
+        playSound(clickSound);
     }
 
     const handleRestart = () => {
         setHistory([Array(9).fill(null)]);
         setCurrentMove(0);
         setWinner(null);
+
+        playSound(clickSound);
     }
 
     const renderControls = () => {
@@ -69,8 +83,10 @@ const Game = () => {
 	let status;
 	if (winner) {
 		status = "Winner: " + winner;
+        playSound(winningSound);
     } else if (!checkGameStillRunning()) {
         status = "Too bad we don't have a winner...";
+        playSound(noWinnerSound);
 	} else {
 		status = "Next player: " + (xIsNext ? "X" : "O");
 	}
@@ -82,32 +98,11 @@ const Game = () => {
             <div className="game__board">
                 <Board boardWinner={winner} squares={currentSquares} onHandlePlay={handlePlay} />
             </div>
-             <div className="game__controls">
+            <div className="game__controls">
                 {renderControls()}
             </div>
 		</div>
 	);
 };
-
-type ButtonType = {
-    text: string;
-    style?: React.CSSProperties;
-    onClick?: () => void;
-    disabled?: boolean;
-}
-
-const Button = ({ text, style, disabled = false, onClick }:  ButtonType) => {
-    let cursorType = 'pointer';
-    if (disabled) {
-        cursorType = 'not-allowed';
-    }
-
-    return <button style={{...style, ...{cursor: cursorType}}} 
-        className="controls__button" 
-        onClick={onClick} 
-        disabled={disabled}>
-            {text}
-    </button>
-}
 
 export default Game;

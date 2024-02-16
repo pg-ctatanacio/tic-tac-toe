@@ -22,3 +22,12 @@
     border-color: green;
 }
 
+.board-highlight {
+    border-width: 7px !important;
+    padding: 0px;
+}
+
+.board-highlight-hidden {
+    border-color: transparent;
+    border-image: none !important;
+}

@@ -4,7 +4,7 @@ import Game from "../../../components/Game/Game";
 describe('Test Regular Game', () => {
 
     it('should render Game component', () => {
-        const view = render(<Game />);
+        render(<Game />);
         const elem = screen.getByText('TicTacToe');
         expect(elem).toBeInTheDocument();
     })

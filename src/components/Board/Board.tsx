@@ -1,23 +1,24 @@
 import Square from "../Square/Square";
 import SquareSolid from "../Square/SquareSolid";
-import "./Board.css";
-import { calculateWinner } from "../../utils";
 import SquareShake from "../Square/SquareShake";
 import SquareShakeSolid from "../Square/SquareShakeSolid";
+import { calculateWinner } from "../../utils";
+
+import "./Board.css";
 
 type BoardType = {
-    isFirstMove?: boolean;
     boardWinner?: string|null;
-    lastMoveIndex?: number;
     boardNo?: number;
 	squares: (string | null)[];
     boardStyles?: string; 
     onHandlePlay?: (cellIndex: number) => void;
     isExtreme?: boolean;
     onHandleExtremePlay?: (cellIndex: number, boardNo: number|undefined) => void;
+
+    isFocused?: boolean;
 };
 
-const Board = ({ isFirstMove, boardWinner, lastMoveIndex, boardNo, squares, onHandlePlay, isExtreme = false, onHandleExtremePlay }: BoardType) => {
+const Board = ({ boardWinner, boardNo, squares, onHandlePlay, isExtreme = false, isFocused = false, onHandleExtremePlay }: BoardType) => {
     const handleSquareClick = (cellIndex: number, boardNo: number|undefined) => {
         if (isExtreme && onHandleExtremePlay) {
             onHandleExtremePlay(cellIndex, boardNo);
@@ -67,24 +68,11 @@ const Board = ({ isFirstMove, boardWinner, lastMoveIndex, boardNo, squares, onHa
         return rows;
     }
 
-    const getBoardHighlight = () => {
-        let highlight = '';
-        if (boardNo === lastMoveIndex && !isFirstMove) {
-            highlight = 'board-highlight-focus';
-        } 
-        // else if (calculateWinner(squares)) {
-        //     highlight = 'board-highlight-win';
-        // }
-
-        // return highlight
-    }
-
 	return (
-		<div className={`board-container ${getBoardHighlight()}`}>
-			{/* <div className="status">{status}</div> */}
-            {renderBoard()}
-
-           
+		<div className={`board-container`}>
+            <fieldset className={`board-highlight ${!isFocused ? 'board-highlight-hidden' : ''}`}>
+                {renderBoard()}
+            </fieldset>
 		</div>
 	);
 };
