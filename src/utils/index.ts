@@ -1,4 +1,4 @@
 import calculateWinner from "./calculateWinner";
-import playSound from "./playSound";
+import SoundManager from "./SoundManager";
 
-export { calculateWinner, playSound }
+export { calculateWinner, SoundManager };
