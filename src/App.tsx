@@ -1,17 +1,25 @@
+import { Routes, Route } from "react-router-dom";
+
 import Game from "./components/Game/Game";
-import "./App.css";
 import Extreme from "./components/Extreme/Extreme";
-import "doodle.css/doodle.css";
+import Landing from "./components/Landing/Landing";
+
+import 'doodle.css/doodle.css'
+import "./App.css";
+import { useEffect } from "react";
 
 const App = () => {
-	// return <></>
+    useEffect(() => {
+        document.body.classList.add('doodle');
+    }, []);
+
 	return (
-		<div className="app doodle">
-			<Extreme />
-		</div>
-	);
-	return <Game />;
-	return <Extreme />;
+        <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/basic" element={<Game />} />
+            <Route path="/extreme" element={<Extreme />} />
+        </Routes>
+    )
 };
 
 export default App;
