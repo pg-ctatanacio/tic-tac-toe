@@ -1,58 +1,33 @@
 import Square from "../Square/Square";
+import SquareSolid from "../Square/SquareSolid";
+import SquareShake from "../Square/SquareShake";
+import SquareShakeSolid from "../Square/SquareShakeSolid";
+import { calculateWinner } from "../../utils";
+
 import "./Board.css";
 
 type BoardType = {
-	xIsNext: boolean;
+    boardWinner?: string|null;
+    boardNo?: number;
 	squares: (string | null)[];
-	onPlay: (nextSquares: (string | null)[]) => void;
+    boardStyles?: string; 
+    onHandlePlay?: (cellIndex: number) => void;
+    isExtreme?: boolean;
+    onHandleExtremePlay?: (cellIndex: number, boardNo: number|undefined) => void;
+
+    isFocused?: boolean;
 };
 
-const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
-	const handleClick = (i: number) => {
-		if (squares[i] || calculateWinner(squares)) {
-			return;
-		}
+const Board = ({ boardWinner, boardNo, squares, onHandlePlay, isExtreme = false, isFocused = false, onHandleExtremePlay }: BoardType) => {
+    const handleSquareClick = (cellIndex: number, boardNo: number|undefined) => {
+        if (isExtreme && onHandleExtremePlay) {
+            onHandleExtremePlay(cellIndex, boardNo);
+        }
 
-		const nextSquares = squares.slice();
-
-		if (xIsNext) {
-			nextSquares[i] = "X";
-		} else {
-			nextSquares[i] = "O";
-		}
-
-		onPlay(nextSquares);
-	};
-
-	const calculateWinner = (squares: (string | null)[]) => {
-		const lines = [
-			[0, 1, 2],
-			[3, 4, 5],
-			[6, 7, 8],
-			[0, 3, 6],
-			[1, 4, 7],
-			[2, 5, 8],
-			[0, 4, 8],
-			[2, 4, 6],
-		];
-
-		for (let i = 0; i < lines.length; i++) {
-			const [a, b, c] = lines[i];
-			if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-				return squares[a];
-			}
-		}
-
-		return null;
-	};
-
-	const winner = calculateWinner(squares);
-	let status;
-	if (winner) {
-		status = "Winner: " + winner;
-	} else {
-		status = "Next player: " + (xIsNext ? "X" : "O");
-	}
+        if (onHandlePlay && !onHandleExtremePlay) {
+            onHandlePlay(cellIndex)
+        }
+    }
 
     const renderBoard = () => {
         let rows = [];
@@ -61,7 +36,30 @@ const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
             for (let j = 0; j < 3; j++) {
                 // (row * 3) + col
                 let index = (i * 3) + j;
-                columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />);
+
+                // columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleClick(index)} />);
+
+                if (calculateWinner(squares)) {
+                    if (boardWinner === 'X') {
+                        if ([0,2,4,6,8].includes(index)) {
+                            columns.push(<SquareShakeSolid styles="square-solid-x" key={index} shakeOnRender />);
+                        } else {
+                            columns.push(<SquareSolid key={index} />);
+                        }
+                    } else if (boardWinner === 'O') {
+                        if ([0,1,2,3,5,6,7,8].includes(index)) {
+                            columns.push(<SquareShakeSolid key={index} styles="square-solid-o" shakeOnRender />);
+                        } else {
+                            columns.push(<SquareSolid key={index} />);
+                        }
+                    } else {
+                        columns.push(<Square key={index} value={squares[index]} onSquareClick={() => handleSquareClick(index, boardNo)} />);
+                    }
+                } else {
+                    let textColor = squares[index] === 'X' ? '#d529a2' : '#385ff7';
+                    columns.push(<SquareShake key={index} value={squares[index]} color={textColor} onSquareClick={() => handleSquareClick(index, boardNo)} />);
+                }
+                
             }
 
             rows.push(<div key={i} className="board-row">{columns}</div>);
@@ -71,10 +69,11 @@ const Board = ({ xIsNext, squares, onPlay }: BoardType) => {
     }
 
 	return (
-		<>
-			<div className="status">{status}</div>
-            {renderBoard()}
-		</>
+		<div className={`board-container`}>
+            <fieldset className={`board-highlight ${!isFocused ? 'board-highlight-hidden' : ''}`}>
+                {renderBoard()}
+            </fieldset>
+		</div>
 	);
 };
 

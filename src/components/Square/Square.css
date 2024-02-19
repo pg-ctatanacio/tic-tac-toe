@@ -1,14 +1,43 @@
 .square {
-	background: #fff;
-	border: 1px solid #999;
 	float: left;
 	font-size: 24px;
 	font-weight: bold;
-	line-height: 34px;
-	height: 34px;
 	margin-right: -1px;
 	margin-top: -1px;
 	padding: 0;
 	text-align: center;
-	width: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.square__text {
+    font-size: 20px;
+}
+
+.square-solid-x {
+    background-color: rgb(213 41 162) !important;
+}
+
+.square-solid-o {
+    background-color: rgb(56 95 247) !important;
+}
+
+button.shake{
+    animation: shake 1s infinite;
+}
+
+@keyframes shake {
+    0%  { transform: translate(2px, 1px)   rotate(0deg);  }
+    10% { transform: translate(-1px, -2px) rotate(-2deg); }
+    20% { transform: translate(-3px, 0px)  rotate(3deg);  }
+    30% { transform: translate(0px, 2px)   rotate(0deg);  }
+    40% { transform: translate(1px, -1px)  rotate(1deg);  }
+    50% { transform: translate(-1px, 2px)  rotate(-1deg); }
+    60% { transform: translate(-3px, 1px)  rotate(0deg);  }
+    70% { transform: translate(2px, 1px)   rotate(-2deg); }
+    80% { transform: translate(-1px, -1px) rotate(4deg);  }
+    90% { transform: translate(2px, 2px)   rotate(0deg);  }
+    100%{ transform: translate(1px, -2px)  rotate(-1deg); }
 }
