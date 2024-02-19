@@ -3,12 +3,14 @@ import "./Square.css";
 type SquareProps = {
 	value: string | null;
 	onSquareClick: () => void;
+    size?: number;
+    color?: string;
 };
 
-const Square = ({ value, onSquareClick }: SquareProps) => {
+const Square = ({ value, size = 48, color, onSquareClick }: SquareProps) => {
 	return (
-		<button className="square" onClick={onSquareClick}>
-			{value}
+		<button style={{height: size, width: size}} className="square" onClick={onSquareClick}>
+			<span style={{color: color}} className="square__text">{value}</span>
 		</button>
 	);
 };

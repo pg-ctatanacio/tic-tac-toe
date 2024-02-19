@@ -1,0 +1,40 @@
+.extreme-board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.extreme-board__title {
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 10px;
+}
+
+.extreme-board__status {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.extreme-board__error {
+    text-align: center;
+    font-size: 11px;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.extreme-board-col {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.extreme-board__controls {
+    display: flex;
+    align-self: center;
+    margin-left: 4px;
+}
