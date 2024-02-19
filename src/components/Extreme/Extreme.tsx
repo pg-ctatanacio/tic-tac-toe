@@ -110,6 +110,30 @@ const Extreme = () => {
 		SoundManager.playSound(clickSound);
 	};
 
+    const handleRestart = () => {
+        setXIsNext(true);
+        setBoardWinner((Array(9).fill(null)));
+        setIsFirstMove(true);
+        setWinner(null);
+        setError('');
+        setHistory([Array(9).fill(Array(9).fill(null))]);
+        setLastMoveIdxArr([]);
+        setCurrentMove(0);
+    }
+
+    const renderControls = () => {
+        if (winner) {
+			return <Button text="Restart" style={{ width: "100%" }} onClick={handleRestart} />;
+		} else {
+			return (
+				<>
+					<Button text="Undo" onClick={handleUndo} disabled={currentMove === 0} />
+					<Button text="Redo" onClick={handleRedo} disabled={currentMove >= history.length - 1} />
+				</>
+			);
+		}
+    }
+
 	const renderMoveLabel = () => {
         if (winner) {
             return winner + " is the winner!"
@@ -205,10 +229,7 @@ const Extreme = () => {
 					isExtreme
 				/>
 			</div>
-			<div className="extreme-board__controls">
-				<Button text="Undo" onClick={handleUndo} disabled={currentMove === 0} />
-				<Button text="Redo" onClick={handleRedo} disabled={currentMove >= history.length - 1} />
-			</div>
+			<div className="extreme-board__controls">{renderControls()}</div>
 		</div>
 	);
 };
