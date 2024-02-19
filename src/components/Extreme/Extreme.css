@@ -20,8 +20,21 @@
     text-align: center;
 }
 
+.extreme-board__error {
+    text-align: center;
+    font-size: 11px;
+    color: red;
+    margin-bottom: 10px;
+}
+
 .extreme-board-col {
     gap: 10px;
     display: flex;
     flex-direction: row;
+}
+
+.extreme-board__controls {
+    display: flex;
+    align-self: center;
+    margin-left: 4px;
 }

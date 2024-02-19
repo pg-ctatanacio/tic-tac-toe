@@ -51,6 +51,4 @@ describe('Test Extreme Game', () => {
 
         expect(squares[9]).toHaveTextContent('');
     });
-
-    //
 })

@@ -7,7 +7,7 @@ const App = () => {
 	// return <></>
 	return (
 		<div className="app doodle">
-			<Game />
+			<Extreme />
 		</div>
 	);
 	return <Game />;
