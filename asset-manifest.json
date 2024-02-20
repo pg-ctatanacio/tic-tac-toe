@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/tic-tac-toe/static/css/main.9461c6fa.css",
+    "main.js": "/tic-tac-toe/static/js/main.1f321819.js",
+    "static/js/592.2461f0e4.chunk.js": "/tic-tac-toe/static/js/592.2461f0e4.chunk.js",
+    "static/media/mixkit-achievement-bell-600.wav": "/tic-tac-toe/static/media/mixkit-achievement-bell-600.fe95e484c435a6154d9c.wav",
+    "static/media/toothless-dancing.mp3": "/tic-tac-toe/static/media/toothless-dancing.14a87613ee1470aef5ba.mp3",
+    "static/media/mixkit-classic-click-1117.wav": "/tic-tac-toe/static/media/mixkit-classic-click-1117.6b885d08b1dd5737c869.wav",
+    "static/media/mixkit-arcade-game-jump-coin-216.wav": "/tic-tac-toe/static/media/mixkit-arcade-game-jump-coin-216.ae2de8e7e136703f3626.wav",
+    "static/media/border.svg": "/tic-tac-toe/static/media/border.168b5ac79f495e8a8979.svg",
+    "static/media/bq.svg": "/tic-tac-toe/static/media/bq.d5891f2b70bc1466bba8.svg",
+    "static/media/hr.svg": "/tic-tac-toe/static/media/hr.cbabbf447fb1850c261f.svg",
+    "static/media/button.svg": "/tic-tac-toe/static/media/button.682c5c29c98c5f2aea74.svg",
+    "static/media/checkbox.svg": "/tic-tac-toe/static/media/checkbox.90fd04739155cad554bd.svg",
+    "static/media/radio.svg": "/tic-tac-toe/static/media/radio.e9426e6ce0a3fda641a7.svg",
+    "static/media/caret.svg": "/tic-tac-toe/static/media/caret.b986d30730fdb088e8b9.svg",
+    "index.html": "/tic-tac-toe/index.html",
+    "main.9461c6fa.css.map": "/tic-tac-toe/static/css/main.9461c6fa.css.map",
+    "main.1f321819.js.map": "/tic-tac-toe/static/js/main.1f321819.js.map",
+    "592.2461f0e4.chunk.js.map": "/tic-tac-toe/static/js/592.2461f0e4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9461c6fa.css",
+    "static/js/main.1f321819.js"
+  ]
+}
