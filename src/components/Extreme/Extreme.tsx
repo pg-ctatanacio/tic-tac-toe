@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Board from "../Board/Board";
-import "./Extreme.css";
 import Button from "../Button";
 import { calculateWinner, SoundManager } from "../../utils";
 
@@ -8,6 +8,8 @@ import winningSound from "../../assets/sounds/mixkit-achievement-bell-600.wav";
 import noWinnerSound from "../../assets/sounds/mixkit-short-electric-fence-buzz-2966.wav";
 import clickSound from "../../assets/sounds/mixkit-classic-click-1117.wav";
 import boardClickSound from "../../assets/sounds/mixkit-arcade-game-jump-coin-216.wav";
+
+import "./Extreme.css";
 
 const Extreme = () => {
 	const [xIsNext, setXIsNext] = useState<boolean>(true);
@@ -19,6 +21,8 @@ const Extreme = () => {
     const [lastMoveIdxArr, setLastMoveIdxArr] = useState<number[]>([]);
     const [currentMove, setCurrentMove] = useState<number>(0);
     const currentSquares = history[currentMove];
+
+    const navigate = useNavigate();
 
 	const handlePlay = (cellIndex: number, boardNo: number | undefined) => {
 		if (boardNo === undefined) {
@@ -146,6 +150,10 @@ const Extreme = () => {
 		}
 	};
 
+    const handleBack = () => {
+        navigate('/');
+    }
+
 	return (
 		<div className="extreme-board">
 			<div className="extreme-board__title">Extreme TicTac</div>
@@ -229,7 +237,12 @@ const Extreme = () => {
 					isExtreme
 				/>
 			</div>
-			<div className="extreme-board__controls">{renderControls()}</div>
+			<div className="extreme-board__controls">
+                {renderControls()}
+            </div>
+            <div className="extreme-board__navigation">
+                <Button text="Back to menu" onClick={handleBack} />
+            </div>
 		</div>
 	);
 };

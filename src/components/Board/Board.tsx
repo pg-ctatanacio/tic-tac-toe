@@ -5,6 +5,7 @@ import SquareShakeSolid from "../Square/SquareShakeSolid";
 import { calculateWinner } from "../../utils";
 
 import "./Board.css";
+import React from "react";
 
 type BoardType = {
     boardWinner?: string|null;
@@ -14,7 +15,6 @@ type BoardType = {
     onHandlePlay?: (cellIndex: number) => void;
     isExtreme?: boolean;
     onHandleExtremePlay?: (cellIndex: number, boardNo: number|undefined) => void;
-
     isFocused?: boolean;
 };
 

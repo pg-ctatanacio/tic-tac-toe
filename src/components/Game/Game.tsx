@@ -9,6 +9,7 @@ import toothlessSound from "../../assets/sounds/toothless-dancing.mp3";
 import { calculateWinner, SoundManager } from "../../utils";
 
 import "./Game.css";
+import { useNavigate } from "react-router";
 
 const Game = () => {
 	const [history, setHistory] = useState<(string | null)[][]>([Array(9).fill(null)]);
@@ -17,6 +18,8 @@ const Game = () => {
 	const [audio, setAudio] = useState<HTMLAudioElement>(new Audio());
 	const currentSquares = history[currentMove];
 	const xIsNext = currentMove % 2 === 0;
+
+    const navigate = useNavigate();
 
 	useEffect(() => {
 		if (winner) {
@@ -73,6 +76,10 @@ const Game = () => {
 		SoundManager.stopSound(audio);
 	};
 
+    const handleBack = () => {
+        navigate('/');
+    }
+
 	const renderControls = () => {
 		if (winner || !checkGameStillRunning()) {
 			return <Button text="Restart" style={{ width: "100%" }} onClick={handleRestart} />;
@@ -110,7 +117,12 @@ const Game = () => {
 			<div className="game__board">
 				<Board boardWinner={winner} squares={currentSquares} onHandlePlay={handlePlay} />
 			</div>
-			<div className="game__controls">{renderControls()}</div>
+			<div className="game__controls">
+                {renderControls()}
+            </div>
+            <div className="game__navigation">
+                <Button text="Back to menu" onClick={handleBack} />
+            </div>
 		</div>
 	);
 };

@@ -36,6 +36,10 @@ body {
     margin-left: -1px;
 }
 
+.game__navigation {
+    margin-top: 3px;
+}
+
 .controls__button {
     border-radius: 8px;
     cursor: pointer;
