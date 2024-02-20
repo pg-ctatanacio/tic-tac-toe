@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/tic-tac-toe/static/css/main.9461c6fa.css",
-    "main.js": "/tic-tac-toe/static/js/main.1f321819.js",
+    "main.js": "/tic-tac-toe/static/js/main.14458da9.js",
     "static/js/592.2461f0e4.chunk.js": "/tic-tac-toe/static/js/592.2461f0e4.chunk.js",
     "static/media/mixkit-achievement-bell-600.wav": "/tic-tac-toe/static/media/mixkit-achievement-bell-600.fe95e484c435a6154d9c.wav",
     "static/media/toothless-dancing.mp3": "/tic-tac-toe/static/media/toothless-dancing.14a87613ee1470aef5ba.mp3",
@@ -16,11 +16,11 @@
     "static/media/caret.svg": "/tic-tac-toe/static/media/caret.b986d30730fdb088e8b9.svg",
     "index.html": "/tic-tac-toe/index.html",
     "main.9461c6fa.css.map": "/tic-tac-toe/static/css/main.9461c6fa.css.map",
-    "main.1f321819.js.map": "/tic-tac-toe/static/js/main.1f321819.js.map",
+    "main.14458da9.js.map": "/tic-tac-toe/static/js/main.14458da9.js.map",
     "592.2461f0e4.chunk.js.map": "/tic-tac-toe/static/js/592.2461f0e4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9461c6fa.css",
-    "static/js/main.1f321819.js"
+    "static/js/main.14458da9.js"
   ]
 }
