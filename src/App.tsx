@@ -6,10 +6,10 @@ import Landing from "./components/Landing/Landing";
 
 import 'doodle.css/doodle.css'
 import "./App.css";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 const App = () => {
-    useEffect(() => {
+    useLayoutEffect(() => {
         document.body.classList.add('doodle');
     }, []);
 

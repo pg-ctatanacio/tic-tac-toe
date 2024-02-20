@@ -9,3 +9,20 @@
     align-items: center;
     width: 400px;
 }
+
+.landing__navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    gap: 5px;
+}
+
+.landing__title {
+    margin: 10px 0;
+}
+
+.landing__title > span {
+    font-weight: bold;
+    font-size: 24px;
+}

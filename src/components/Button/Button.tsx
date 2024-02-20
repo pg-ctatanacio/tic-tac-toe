@@ -1,3 +1,5 @@
+import './Button.css';
+
 type ButtonType = {
     text: string;
     style?: React.CSSProperties;
